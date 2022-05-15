@@ -1,6 +1,7 @@
 package service_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/matryer/is"
@@ -24,6 +25,7 @@ func TestBundlingPromoOffer_Apply(t *testing.T) {
 			InventoryQty: 10,
 		}
 		fakeProductStorage.GetProductReturns(product, nil)
+		fakeProductStorage.ReduceInventoryQuantityReturns(nil)
 
 		bundling := service.NewBundlingPromoOffer(fakeProductStorage, fakeCartStorage)
 
@@ -73,5 +75,32 @@ func TestBundlingPromoOffer_Apply(t *testing.T) {
 
 		err := bundling.Apply(cartItem, product1, promo)
 		is.NoErr(err)
+	})
+
+	t.Run("err get product", func(t *testing.T) {
+		fakeProductStorage := &counterfeiter.FakeBundlingPromoProductStorage{}
+		fakeProductStorage.GetProductReturns(
+			domain.Product{},
+			errors.New("unexpected error"),
+		)
+
+		bundling := service.NewBundlingPromoOffer(fakeProductStorage, nil)
+
+		cartItem := domain.CartItem{
+			SKU:      "1",
+			Quantity: 2,
+		}
+
+		product1 := domain.Product{
+			SKU:   "1",
+			Price: 30,
+		}
+
+		promo := domain.Promo{
+			Bundling: domain.Bundling{SKU: "2"},
+		}
+
+		err := bundling.Apply(cartItem, product1, promo)
+		is.Equal(errors.New("unexpected error"), err)
 	})
 }

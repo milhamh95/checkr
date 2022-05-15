@@ -39,3 +39,14 @@ func TestBuyXPayYPromoOffer_Apply(t *testing.T) {
 		is.NoErr(err)
 	})
 }
+
+func TestBuyXPayYPromoOffer_Eligible(t *testing.T) {
+	is := is.New(t)
+
+	t.Run("is not eligible", func(t *testing.T) {
+		buyXPayY := service.NewBuyXPayYPromoOffer(nil)
+
+		res := buyXPayY.Eligible(3, 2)
+		is.Equal(false, res)
+	})
+}

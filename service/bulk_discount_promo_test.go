@@ -43,28 +43,10 @@ func TestBulkDiscountPromoOffer_Apply(t *testing.T) {
 func TestBulkDiscountPromoOffer_Eligible(t *testing.T) {
 	is := is.New(t)
 
-	t.Run("success", func(t *testing.T) {
-		fakeCartStorage := &counterfeiter.FakeBulkDiscountCartStorage{}
-		bulkDiscount := service.NewBulkDiscountPromoOffer(fakeCartStorage)
+	t.Run("is not eligible", func(t *testing.T) {
+		bulkDiscount := service.NewBulkDiscountPromoOffer(nil)
 
-		cartItem := domain.CartItem{
-			SKU:      "1",
-			Quantity: 1,
-		}
-
-		product := domain.Product{
-			SKU:   "1",
-			Price: 30,
-		}
-
-		promo := domain.Promo{
-			BulkDiscount: domain.BulkDiscount{
-				MinQuantity:        2,
-				DiscountPercentage: 10,
-			},
-		}
-
-		err := bulkDiscount.Apply(cartItem, product, promo)
-		is.NoErr(err)
+		res := bulkDiscount.Eligible(3, 2)
+		is.Equal(false, res)
 	})
 }
