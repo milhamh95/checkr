@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/milhamh95/checkr/domain"
+	"github.com/milhamh95/checkr/pkg/roundfloat"
 )
 
 type bulkDiscountCartStorage interface {
@@ -35,7 +36,7 @@ func (b *bulkDiscountPromoOffer) Apply(
 		float64(promo.BulkDiscount.DiscountPercentage) / 100
 	finalPrice := product.Price - promoPriceReduction
 
-	item.DiscountedPrice = item.RoundFloat(finalPrice)
+	item.DiscountedPrice = roundfloat.RoundFloat(finalPrice)
 	err := b.cartStorage.Update(item)
 	return err
 }

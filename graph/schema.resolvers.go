@@ -6,11 +6,11 @@ package graph
 import (
 	"context"
 	"errors"
-	"math"
 
 	"github.com/milhamh95/checkr/domain"
 	"github.com/milhamh95/checkr/graph/generated"
 	"github.com/milhamh95/checkr/graph/model"
+	"github.com/milhamh95/checkr/pkg/roundfloat"
 )
 
 const (
@@ -43,10 +43,6 @@ func (r *mutationResolver) ScanItems(ctx context.Context, input model.ScanItems)
 	return resp, nil
 }
 
-func roundFloat(price float64) float64 {
-	return math.Round(float64(price*100)) / 100
-}
-
 func (r *mutationResolver) Checkout(ctx context.Context) (*model.CheckoutResult, error) {
 	resp := &model.CheckoutResult{}
 
@@ -56,7 +52,7 @@ func (r *mutationResolver) Checkout(ctx context.Context) (*model.CheckoutResult,
 		return resp, nil
 	}
 
-	resp.TotalPrice = roundFloat(totalPrice)
+	resp.TotalPrice = roundfloat.RoundFloat(totalPrice)
 	resp.Message = MessageSuccess
 
 	checkoutItems := []*model.CheckoutItem{}

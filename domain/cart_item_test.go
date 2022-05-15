@@ -49,3 +49,20 @@ func TestCartItem_TotalPrice(t *testing.T) {
 		is.Equal(float64(60), res)
 	})
 }
+
+func TestCartItem_TotalQuantity(t *testing.T) {
+	is := is.New(t)
+
+	t.Run("success", func(t *testing.T) {
+		cartItem := CartItem{
+			SKU:             "1",
+			Quantity:        3,
+			Price:           30,
+			DiscountedPrice: 20,
+			FreeQuantity:    2,
+		}
+
+		res := cartItem.TotalQuantity()
+		is.Equal(5, res)
+	})
+}

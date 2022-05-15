@@ -49,14 +49,12 @@ func (b *bundlingPromoOffer) Apply(
 		freeQuantity = bundlingProduct.InventoryQty
 	}
 
-	b.cartStorage.AddFreeItem(domain.NewCartItem(
-		bundlingProduct.SKU,
-		bundlingProduct.Name,
-		bundlingProduct.Price,
-		bundlingProduct.Price,
-		0,
-		freeQuantity,
-	))
+	b.cartStorage.AddFreeItem(domain.CartItem{
+		SKU:             bundlingProduct.SKU,
+		Name:            bundlingProduct.Name,
+		Price:           bundlingProduct.Price,
+		DiscountedPrice: bundlingProduct.Price,
+	})
 
 	err = b.productStorage.ReduceInventoryQuantity(item.SKU, freeQuantity)
 

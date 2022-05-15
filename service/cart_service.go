@@ -61,8 +61,8 @@ func (c *cartService) AddItem(cartItems []domain.CartItem) error {
 		}
 
 		cartItem.Name = product.Name
-		cartItem.Price = cartItem.RoundFloat(product.Price)
-		cartItem.DiscountedPrice = cartItem.RoundFloat(product.Price)
+		cartItem.Price = product.Price
+		cartItem.DiscountedPrice = product.Price
 		c.cartStorage.AddItem(cartItem)
 	}
 
