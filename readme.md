@@ -9,7 +9,6 @@ checker is a checkout service that will support different promotions with the gi
 ## Product
 
 | SKU | Name | Price | Inventory Qty  |
-
 |--|---|---|---|
 | 120P90 | Google Home |  $49.99 | 10 |
 | 43N23P | Macbook Pro | $5399.99 | 5 |
