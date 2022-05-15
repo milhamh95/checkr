@@ -1,0 +1,40 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+input ScanItems {
+  items: [ScanItem]
+}
+
+input ScanItem {
+  sku: String!
+  quantity: Int!
+}
+
+type ScanItemsResult {
+  message: String!
+}
+
+type CheckoutResult {
+  message: String!
+  totalPrice: Float!
+  items: [CheckoutItem!]
+}
+
+type CheckoutItem {
+  sku: String!
+  name: String!
+  price: Float!
+  discountedPrice: Float!
+  quantity: Int!
+  freeQuantity: Int!
+}
+
+type Mutation {
+  scanItems(input: ScanItems!): ScanItemsResult!
+  checkout: CheckoutResult!
+}
+
+type Query {
+  echo: String!
+}
