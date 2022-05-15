@@ -48,3 +48,11 @@ gen_cartStorageSource_stub:
 .PHONY: gen_cartPromoService_stub
 gen_cartPromoService_stub:
 	@counterfeiter -o ./counterfeiter ./service/ cartPromoService
+
+.PHONY: gen_promoStorageSource_stub
+gen_promoStorageSource_stub:
+	@counterfeiter -o ./counterfeiter ./service/ promoStorageSource
+
+.PHONY: gen_promoProductStorage_stub
+gen_promoProductStorage_stub:
+	@counterfeiter -o ./counterfeiter ./service/ promoProductStorage
